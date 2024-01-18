@@ -14,7 +14,7 @@ def main():
 
 @main.command()
 @click.argument("task")
-@click.option("--due", help="Due date for the task")
+@click.option("--due", help="Due date for the task.")
 def add(task, due):
     """Add a new task."""
     add_task(task, due)
