@@ -34,8 +34,10 @@ def list():
         click.echo("No tasks to display.")
         return
 
+    display = [(i + 1, task[1], task[2]) for i, task in enumerate(tasks)]
+
     headers = ["ID", "Task", "Due"]
-    click.echo(tabulate(tasks, headers=headers, tablefmt="grid"))
+    click.echo(tabulate(display, headers=headers, tablefmt="grid"))
 
 
 @main.command()
@@ -47,7 +49,10 @@ def remove(task_id):
         click.echo("Invalid task ID.")
         return
 
-    remove_task(task_id)
+    tasks = get_tasks()
+    id_to_remove = tasks[task_id - 1][0]
+
+    remove_task(id_to_remove)
     click.echo(f"Task with ID {task_id} removed successfully.")
 
 
