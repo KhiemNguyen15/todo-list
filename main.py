@@ -4,10 +4,14 @@ from tabulate import tabulate
 from todo.database import init_database, add_task, get_tasks, remove_task
 
 
+__version__ = "1.0.0"
+
+
 init_database()
 
 
 @click.group()
+@click.version_option(version=__version__)
 def main():
     pass
 
@@ -47,7 +51,7 @@ def remove(task_id):
     click.echo(f"Task with ID {task_id} removed successfully.")
 
 
-@main.command()
+@main.command(hidden=True)
 @click.pass_context
 def help(ctx):
     """Show this message and exit."""
