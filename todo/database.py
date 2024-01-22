@@ -1,11 +1,16 @@
+from pathlib import Path
 import os
 import sqlite3
 
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tasks.db")
+DIR_PATH = os.path.join(os.path.expanduser("~"), ".todo", "data")
+DB_PATH = Path(os.path.join(DIR_PATH, "tasks.db"))
 
 
 def init_database():
+    os.makedirs(DIR_PATH, exist_ok=True)
+    DB_PATH.touch()
+
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
