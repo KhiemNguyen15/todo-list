@@ -50,7 +50,7 @@ def remove(task_id):
 @main.command()
 @click.pass_context
 def help(ctx):
-    """Show this help message and exit."""
+    """Show this message and exit."""
     click.echo(ctx.parent.get_help())
 
 
