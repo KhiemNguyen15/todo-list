@@ -1,5 +1,5 @@
 import click
-import tabulate
+from tabulate import tabulate
 
 from todo.database import init_database, add_task, get_tasks, remove_task
 
@@ -39,7 +39,7 @@ def list():
 def remove(task_id):
     """Remove a task."""
     num_tasks = len(get_tasks())
-    if task_id > num_tasks:
+    if task_id < 1 or task_id > num_tasks:
         click.echo("Invalid task ID.")
         return
 
