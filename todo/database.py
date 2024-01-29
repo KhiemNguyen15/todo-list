@@ -21,7 +21,7 @@ def init_database():
             task TEXT NOT NULL,
             due TEXT
         )
-    """
+        """
     )
 
     conn.commit()
@@ -33,6 +33,33 @@ def add_task(task, due):
     c = conn.cursor()
 
     c.execute("INSERT INTO tasks (task, due) VALUES (?, ?)", (task, due))
+
+    conn.commit()
+    conn.close()
+
+
+def update_task(task_id, new_task, due):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+
+    if not due:
+        c.execute(
+            """
+            UPDATE tasks
+            SET task = ?
+            WHERE id = ?
+            """,
+            (new_task, task_id),
+        )
+    else:
+        c.execute(
+            """
+            UPDATE tasks
+            SET task = ?, due = ?
+            WHERE id = ?
+            """,
+            (new_task, due, task_id),
+        )
 
     conn.commit()
     conn.close()

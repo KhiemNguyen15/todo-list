@@ -1,7 +1,7 @@
 import click
 from tabulate import tabulate
 
-from todo.database import init_database, add_task, get_tasks, remove_task
+from todo.database import init_database, add_task, update_task, get_tasks, remove_task
 
 
 __version__ = "1.0.0"
@@ -23,6 +23,24 @@ def add(task, due):
     """Add a new task."""
     add_task(task, due)
     click.echo(f'Task "{task}" added successfully.')
+
+
+@main.command()
+@click.argument("task_id", type=int)
+@click.argument("new_task")
+@click.option("--due", help="Due date for the task.")
+def update(task_id, new_task, due):
+    """Update an existing task."""
+    num_tasks = len(get_tasks())
+    if task_id < 1 or task_id > num_tasks:
+        click.echo("Invalid task ID.")
+        return
+
+    tasks = get_tasks()
+    id_to_update = tasks[task_id - 1][0]
+
+    update_task(id_to_update, new_task, due)
+    click.echo(f"Task with ID {task_id} updated successfully.")
 
 
 @main.command()
